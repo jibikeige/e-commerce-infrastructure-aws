@@ -1,0 +1,1 @@
+// outputs.tf in the parent module (root)
