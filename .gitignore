@@ -40,4 +40,3 @@ override.tf.json
 node_modules/
 
 # Screenshots if not needed in git
-screenshots/*

@@ -6,4 +6,4 @@ bucket_name = "teleios-jibike-staging-bucket"
 
 versioning_enabled = true
 lifecycle_enabled  = true
-transition_days    = 14
+transition_days    = 30
