@@ -1,3 +1,3 @@
 region = "us-east-2"
-name        = "teleios-chris-staging-rds"
+name        = "teleios-jibike-staging-rds"
 environment = "staging"

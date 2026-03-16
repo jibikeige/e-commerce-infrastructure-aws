@@ -1,5 +1,5 @@
 region = "us-east-2"
-name        = "teleios-chris-dev-rds"
+name        = "teleios-jibike-dev-rds"
 environment = "dev"
 
 username = "postgres"

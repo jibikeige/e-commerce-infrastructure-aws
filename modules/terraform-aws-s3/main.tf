@@ -47,6 +47,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
     id     = "archive-rule"
     status = "Enabled"
 
+    filter {}   # REQUIRED
+
     transition {
       days          = var.transition_days
       storage_class = "STANDARD_IA"

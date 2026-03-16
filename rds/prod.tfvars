@@ -1,3 +1,3 @@
 region = "us-east-2"
-name        = "teleios-chris-prod-rds"
+name        = "teleios-jibike-prod-rds"
 environment = "prod"
