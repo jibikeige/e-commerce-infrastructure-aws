@@ -14,3 +14,8 @@ output "private_subnet_ids" {
   description = "List of private subnet IDs from the VPC module"
   value       = module.vpc.private_subnet_ids
 }
+
+output "vpc_cidr" {
+  description = "List of private subnet IDs from the VPC module"
+  value       = module.vpc.vpc_cidr
+}

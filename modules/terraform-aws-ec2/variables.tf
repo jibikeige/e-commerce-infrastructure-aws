@@ -1,7 +1,3 @@
-variable "region" {
-  type = string
-}
-
 variable "name" {
   type = string
 }
@@ -15,32 +11,35 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  description = "Subnets where instances will run"
-  type        = list(string)
+  type = list(string)
 }
 
 variable "ami_id" {
   type = string
 }
 
+variable "region" {
+  description = "AWS region where resources will be created"
+  type        = string
+}
+
 variable "instance_type" {
   type = string
 }
 
-variable "key_name" {
-  type = string
-}
-
 variable "desired_capacity" {
-  type = number
+  type    = number
+  default = 1
 }
 
 variable "min_size" {
-  type = number
+  type    = number
+  default = 1
 }
 
 variable "max_size" {
-  type = number
+  type    = number
+  default = 3
 }
 
 variable "allowed_ingress_cidr" {
