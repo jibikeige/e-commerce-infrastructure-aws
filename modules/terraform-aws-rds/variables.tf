@@ -33,12 +33,6 @@ variable "username" {
   description = ""
 }
 
-variable "password" {
-  type      = string
-  sensitive = true
-  description = ""
-}
-
 variable "instance_class" {
   type = string
   description = ""
@@ -69,4 +63,10 @@ variable "engine_version" {
   type    = string
   default = "15"
   description = ""
+}
+
+variable "db_password" {
+  description = "Database password retrieved from Secrets Manager"
+  type        = string
+  sensitive   = true
 }

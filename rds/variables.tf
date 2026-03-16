@@ -1,33 +1,51 @@
-variable "environment" {
-  type        = string
+variable "region" {
+  type = string
   description = ""
 }
 
 variable "name" {
-  description = "VPC name"
+  description = "Database name prefix"
   type        = string
 }
 
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
-  type        = string
+variable "environment" {
+  type = string
+  description = ""
 }
 
-variable "public_subnets" {
-  description = "Public subnet CIDR blocks"
-  type        = list(string)
-}
-variable "private_subnets" {
-  description = "Private subnet CIDR blocks"
-  type        = list(string)
+variable "username" {
+  type = string
+  description = ""
 }
 
-variable "azs" {
-  description = "Availability zones"
-  type        = list(string)
+variable "db_instance_class" {
+  type = string
+  description = ""
 }
 
-variable "region" {
-  description = "AWS region to deploy resources"
-  type        = string
+variable "allocated_storage" {
+  type = number
+  description = ""
+}
+
+variable "db_multi_az" {
+  type = bool
+  description = ""
+}
+
+variable "backup_retention_period" {
+  type = number
+  description = ""
+}
+
+variable "storage_encrypted" {
+  type    = bool
+  default = true
+  description = ""
+}
+
+variable "engine_version" {
+  type    = string
+  default = "15"
+  description = ""
 }

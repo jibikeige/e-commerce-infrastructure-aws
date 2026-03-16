@@ -3,7 +3,7 @@ locals {
 }
 
 module "rds" {
-  source = "../modules/terraform-aws-eks" # path to your module
+  source = "../modules/terraform-aws-rds" # path to your module
 
   region      = var.region
   name        = var.name
@@ -17,13 +17,9 @@ module "rds" {
   db_password = local.db_credentials.password
 
   instance_class = var.db_instance_class
-  allocated_storage = var.db_storage
+  allocated_storage = var.allocated_storage
 
   multi_az = var.db_multi_az
 
-  backup_retention_period = var.backup_retention
-
-  depends_on = [
-    aws_secretsmanager_secret_version.db
-  ]
+  backup_retention_period = var.backup_retention_period
 }
