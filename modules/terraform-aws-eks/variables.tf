@@ -1,8 +1,8 @@
-variable "region" {
+variable "name" {
   type = string
 }
 
-variable "name" {
+variable "role_name" {
   type = string
 }
 
@@ -10,44 +10,33 @@ variable "environment" {
   type = string
 }
 
-variable "vpc_id" {
-  type = string
+variable "desired_nodes" {
+  type = number
 }
 
-variable "private_subnet_ids" {
+variable "min_nodes" {
+  type = number
+}
+
+variable "max_nodes" {
+  type = number
+}
+
+variable "instance_types" {
   type = list(string)
 }
 
-variable "db_name" {
-  type = string
+variable "public_subnets" {
+  type = list(string)
 }
 
-variable "username" {
-  type = string
+variable "private_subnets" {
+  type = list(string)
 }
 
-variable "instance_class" {
-  type = string
-}
+variable "node_name" {}
 
-variable "allocated_storage" {
-  type = number
-}
-
-variable "multi_az" {
-  type = bool
-}
-
-variable "backup_retention_period" {
-  type = number
-}
-
-variable "storage_encrypted" {
-  type    = bool
-  default = true
-}
-
-variable "engine_version" {
-  type    = string
-  default = "15"
+variable "region" {
+  description = "AWS region where resources will be created"
+  type        = string
 }

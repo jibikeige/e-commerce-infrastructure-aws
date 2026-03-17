@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds" {
-  name        = "${var.name}-rds-sg"
+  name        = "${var.name}-sg"
   description = "RDS security group"
   vpc_id      = var.vpc_id
 
@@ -19,17 +19,17 @@ resource "aws_security_group" "rds" {
   }
 
   tags = {
-    Name        = "${var.name}-rds-sg"
+    Name        = "${var.name}-sg"
     Environment = var.environment
   }
 }
 
 resource "aws_db_subnet_group" "this" {
-  name       = "${var.name}-rds-subnet-group"
+  name       = "${var.name}-subnet-group"
   subnet_ids = var.private_subnet_ids
 
   tags = {
-    Name        = "${var.name}-rds-subnet-group"
+    Name        = "${var.name}-subnet-group"
     Environment = var.environment
   }
 }

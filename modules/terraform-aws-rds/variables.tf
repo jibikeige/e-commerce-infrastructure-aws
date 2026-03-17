@@ -1,5 +1,5 @@
 variable "region" {
-  type = string
+  type        = string
   description = ""
 }
 
@@ -9,59 +9,59 @@ variable "name" {
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = ""
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = ""
 }
 
 variable "private_subnet_ids" {
-  type = list(string)
+  type        = list(string)
   description = ""
 }
 
 variable "db_name" {
-  type = string
+  type        = string
   description = ""
 }
 
 variable "username" {
-  type = string
+  type        = string
   description = ""
 }
 
 variable "instance_class" {
-  type = string
+  type        = string
   description = ""
 }
 
 variable "allocated_storage" {
-  type = number
+  type        = number
   description = ""
 }
 
 variable "multi_az" {
-  type = bool
+  type        = bool
   description = ""
 }
 
 variable "backup_retention_period" {
-  type = number
+  type        = number
   description = ""
 }
 
 variable "storage_encrypted" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
   description = ""
 }
 
 variable "engine_version" {
-  type    = string
-  default = "15"
+  type        = string
+  default     = "15"
   description = ""
 }
 

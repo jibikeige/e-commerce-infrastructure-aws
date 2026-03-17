@@ -3,7 +3,7 @@ data "terraform_remote_state" "vpc" {
 
   config = {
     bucket = "jibike-teleios-state-file"
-    key    = "env:/${terraform.workspace}/vpc/terraform.tfstate"  # dynamically pick workspace
+    key    = "env:/${terraform.workspace}/vpc/terraform.tfstate" # dynamically pick workspace
     region = "us-east-1"
 
     # optional locking

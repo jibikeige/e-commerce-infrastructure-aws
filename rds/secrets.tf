@@ -1,13 +1,14 @@
 resource "random_password" "db" {
-  length  = 20
-  special = true
+  length           = 20
+  special          = true
+  override_special = "!#$%^&*()-_=+[]{}<>:?"
 }
 
 resource "aws_secretsmanager_secret" "db" {
-  name = "${var.name}-postgres-credentials-${var.environment}"
+  name = "${var.name}-postgres-credentials"
 
   tags = {
-    Name        = "${var.name}-db-secret-${var.environment}"
+    Name        = "${var.name}-db-secret"
     Environment = var.environment
   }
 }

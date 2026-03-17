@@ -1,48 +1,34 @@
-variable "desired_nodes" {
-  type        = number
-  description = ""
-}
-
-variable "min_nodes" {
-  type        = number
-  description = ""
-}
-
-variable "max_nodes" {
-  type        = number
-  description = ""
-}
-
-variable "instance_types" {
-  type        = list(string)
-  description = ""
-}
-
 variable "name" {
-  type        = string
-  description = ""
-}
-
-variable "node_name" {
-  type        = string
-  description = ""
-}
-
-variable "role_name" {
-  type        = string
-  description = ""
+  type = string
 }
 
 variable "environment" {
-  type        = string
-  description = ""
+  type = string
 }
 
-variable "vpc_name" {
+variable "desired_nodes" {
+  type = number
+}
+
+variable "min_nodes" {
+  type = number
+}
+
+variable "max_nodes" {
+  type = number
+}
+
+variable "instance_types" {
+  type = list(string)
+}
+
+variable "node_name" {}
+
+variable "role_name" {
   type = string
 }
 
 variable "region" {
-  description = "AWS region to deploy resources"
+  description = "AWS region where resources will be created"
   type        = string
 }

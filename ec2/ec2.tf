@@ -9,7 +9,7 @@ module "ec2" {
   vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
   subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
 
-  ami_id = data.aws_ssm_parameter.al2023.value
+  ami_id        = data.aws_ssm_parameter.al2023.value
   instance_type = var.instance_type
 
   desired_capacity = var.desired_capacity

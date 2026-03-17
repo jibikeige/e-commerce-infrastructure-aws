@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks_cluster_role" {
-  name = "${var.role_name}-eks-cluster-role-${var.environment}"
+  name = "${var.role_name}-eks-cluster-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -15,7 +15,7 @@ resource "aws_iam_role" "eks_cluster_role" {
   })
 
   tags = {
-    Name        = "${var.role_name}-eks-cluster-role-${var.environment}"
+    Name        = "${var.role_name}-eks-cluster-role"
     Environment = var.environment
   }
 }
@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_AmazonEKSVPCResourceContr
 }
 
 resource "aws_iam_role" "eks_node_role" {
-  name = "${var.role_name}_eks_node_role_${var.environment}"
+  name = "${var.role_name}_eks_node_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

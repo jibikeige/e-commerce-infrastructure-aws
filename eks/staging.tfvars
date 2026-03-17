@@ -1,2 +1,9 @@
-name        = "teleios-jibike-staging-vpc"
-environment = "staging"
+name           = "teleios-jibike-staging-eks"
+region         = "us-east-2"
+environment    = "staging"
+node_name      = "teleios-jibike-staging-node-group"
+desired_nodes  = 1
+min_nodes      = 1
+max_nodes      = 2
+instance_types = ["t3.micro"]
+role_name      = "teleios-jibike-staging-eks-iam"

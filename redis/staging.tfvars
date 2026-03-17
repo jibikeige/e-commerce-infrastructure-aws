@@ -9,4 +9,4 @@ redis_nodes     = 2
 engine_version = "7.0"
 
 automatic_failover_enabled = true
-multi_az_enabled           = true
+multi_az_enabled           = false
