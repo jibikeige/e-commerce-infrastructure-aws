@@ -61,7 +61,6 @@ resource "aws_elasticache_replication_group" "this" {
   transit_encryption_enabled = false
 
   apply_immediately   = true
-  skip_final_snapshot = false
 
   tags = {
     Name        = "${var.name}-redis"
