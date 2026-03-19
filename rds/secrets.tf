@@ -4,8 +4,12 @@ resource "random_password" "db" {
   override_special = "!#$%^&*()-_=+[]{}<>:?"
 }
 
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
 resource "aws_secretsmanager_secret" "db" {
-  name = "${var.name}-postgres-credentials"
+  name = "${var.name}-postgres-credentials-${random_id}"
 
   recovery_window_in_days = 0 
 

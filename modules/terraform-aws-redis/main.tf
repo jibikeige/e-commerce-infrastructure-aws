@@ -51,11 +51,17 @@ resource "aws_elasticache_replication_group" "this" {
 
   num_cache_clusters = var.num_cache_nodes
 
+  num_node_groups         = 1
+  replicas_per_node_group = 0
+
   automatic_failover_enabled = var.automatic_failover_enabled
   multi_az_enabled           = var.multi_az_enabled
 
-  at_rest_encryption_enabled = true
-  transit_encryption_enabled = true
+  at_rest_encryption_enabled = false
+  transit_encryption_enabled = false
+
+  apply_immediately   = true
+  skip_final_snapshot = false
 
   tags = {
     Name        = "${var.name}-redis"
