@@ -79,7 +79,7 @@ jobs:
 
       # 📋 PLAN
       - name: Terraform Plan
-        if: github.event.inputs.action == 'plan'
+        if: github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply'
         run: terraform plan --var-file=${{ github.event.inputs.environment }}.tfvars -out=tfplan
 
       # 🚀 APPLY
@@ -88,6 +88,8 @@ jobs:
         run: terraform apply --var-file=${{ github.event.inputs.environment }}.tfvars -auto-approve tfplan
 
       # 💣 DESTROY
-      - name: Terraform Destroy
+      - name: Terraform Destroy Plan
         if: github.event.inputs.action == 'destroy'
-        run: terraform destroy --var-file=${{ github.event.inputs.environment }}.tfvars -auto-approve
+        run: terraform plan -destroy \
+          --var-file=${{ github.event.inputs.environment }}.tfvars \
+          -out=tfdestroyplan
