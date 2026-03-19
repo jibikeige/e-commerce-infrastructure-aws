@@ -73,7 +73,7 @@ jobs:
         run: |
           terraform init \
             -backend-config="bucket=jibike-teleios-state-file" \
-            -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}/terraform.tfstate" \
+            -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}.tfstate" \
             -backend-config="region=us-east-1"
 
       # 🌍 Workspace Handling
