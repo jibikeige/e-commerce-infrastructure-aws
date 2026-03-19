@@ -66,12 +66,10 @@ jobs:
       # 📦 Init with backend
       - name: Terraform Init
         run: |
-          - name: Terraform Init
-            run: |
-              terraform init \
-              -backend-config="bucket=jibike-teleios-state-file" \
-              -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}/terraform.tfstate" \
-              -backend-config="region=us-east-1"
+          terraform init \
+            -backend-config="bucket=jibike-teleios-state-file" \
+            -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}/terraform.tfstate" \
+            -backend-config="region=us-east-1"
 
       # 🌍 Workspace Handling
       - name: Select or Create Workspace
