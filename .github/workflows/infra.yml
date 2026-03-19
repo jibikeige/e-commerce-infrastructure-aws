@@ -1,4 +1,5 @@
 name: "Terraform Infrastructure Pipeline"
+run-name: "${{ github.event.inputs.action }} → ${{ github.event.inputs.terraform_folder }} (${{ github.event.inputs.environment }})"
 
 on:
   workflow_dispatch:
@@ -56,6 +57,13 @@ jobs:
           role-to-assume: arn:aws:iam::221693237976:role/github-actions-oidc-jibike
           aws-region: us-east-1
 
+       - name: Show Deployment Context
+        run: |
+          echo "🚀 Terraform Deployment"
+          echo "Folder: ${{ github.event.inputs.terraform_folder }}"
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Action: ${{ github.event.inputs.action }}"
+
       # 🛠 Terraform Install
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85 #v4
@@ -71,7 +79,7 @@ jobs:
       # 🌍 Workspace Handling
       - name: Select or Create Workspace
         run: |
-          terraform workspace select ${{ github.event.inputs.environment }}|| terraform workspace new ${{ github.event.inputs.environment }}
+          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
 
       # 🔎 Validate
       - name: Terraform Validate
