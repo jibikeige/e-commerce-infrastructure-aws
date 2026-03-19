@@ -9,7 +9,7 @@ resource "random_id" "suffix" {
 }
 
 resource "aws_secretsmanager_secret" "db" {
-  name = "${var.name}-postgres-credentials-${random_id}"
+  name = "${var.name}-postgres-credentials-${random_id.suffix.hex}"
 
   recovery_window_in_days = 0 
 
