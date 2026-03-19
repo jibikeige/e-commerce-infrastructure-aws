@@ -98,8 +98,9 @@ jobs:
       # 💣 DESTROY
       - name: Terraform Destroy Plan
         if: github.event.inputs.action == 'destroy'
-        run: terraform plan -destroy -out=tfdestroyplan \
-          --var-file=${{ github.event.inputs.environment }}.tfvars
+        run: |
+          terraform plan -destroy -out=tfdestroyplan \
+            --var-file=${{ github.event.inputs.environment }}.tfvars
 
       - name: Terraform Destroy Apply
         if: github.event.inputs.action == 'destroy'
