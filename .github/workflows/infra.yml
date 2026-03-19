@@ -15,6 +15,15 @@ on:
           - redis
           - s3
 
+      action:
+        description: "Select action"
+        required: true
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+
 permissions:
   id-token: write
   contents: read
