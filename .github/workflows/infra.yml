@@ -1,10 +1,10 @@
-name: "e-commerce-infrastructure-aws infrastructure"
+name: "Terraform Infrastructure Pipeline"
 
 on:
   workflow_dispatch:
     inputs:
       terraform_folder:
-        description: "Select Terraform folder to deploy"
+        description: "Select Terraform module"
         required: true
         type: choice
         options:
@@ -25,7 +25,7 @@ on:
           - destroy
 
       environment:
-        description: "Select action"
+        description: "Select environment"
         required: true
         type: choice
         options:
@@ -38,18 +38,59 @@ permissions:
   contents: read
 
 jobs:
-  aws-auth:
+  terraform:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ github.event.inputs.terraform_folder }}
+
+    env:
+      TF_WORKSPACE: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6
+        uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 #v6
+      # 🔐 AWS OIDC
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::221693237976:role/github-actions-oidc-jibike
           aws-region: us-east-2
 
-      - name: Test AWS Access
-        run: aws sts get-caller-identity
+      # 🛠 Terraform Install
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # 📦 Init with backend
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="bucket=your-terraform-state-bucket" \
+            -backend-config="key=${{ github.event.inputs.terraform_folder }}/terraform.tfstate" \
+            -backend-config="region=us-east-2" 
+
+      # 🌍 Workspace Handling
+      - name: Select or Create Workspace
+        run: |
+          terraform workspace select $TF_WORKSPACE || terraform workspace new $TF_WORKSPACE
+
+      # 🔎 Validate
+      - name: Terraform Validate
+        run: terraform validate
+
+      # 📋 PLAN
+      - name: Terraform Plan
+        if: github.event.inputs.action == 'plan'
+        run: terraform plan -out=tfplan
+
+      # 🚀 APPLY
+      - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: terraform apply -auto-approve tfplan
+
+      # 💣 DESTROY
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
+        run: terraform destroy -auto-approve
