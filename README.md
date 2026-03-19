@@ -7,3 +7,11 @@ VPC
 │
 └── Private Subnets
       └── Route → NAT → Internet.
+
+
+
+
+external dns 
+nginx ingress 
+eks addon 
+argocd 

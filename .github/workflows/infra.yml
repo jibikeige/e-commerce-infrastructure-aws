@@ -76,11 +76,6 @@ jobs:
             -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}.tfstate" \
             -backend-config="region=us-east-1"
 
-      # 🌍 Workspace Handling
-      - name: Select or Create Workspace
-        run: |
-          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
-
       # 🔎 Validate
       - name: Terraform Validate
         run: terraform validate
