@@ -24,6 +24,15 @@ on:
           - apply
           - destroy
 
+      environment:
+        description: "Select action"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+
 permissions:
   id-token: write
   contents: read
