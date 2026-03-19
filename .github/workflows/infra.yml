@@ -1,4 +1,4 @@
-name: e-commerce-infrastructure-aws infrastructure
+name: "e-commerce-infrastructure-aws infrastructure"
 
 on:
   workflow_dispatch:
