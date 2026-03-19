@@ -7,6 +7,8 @@ resource "random_password" "db" {
 resource "aws_secretsmanager_secret" "db" {
   name = "${var.name}-postgres-credentials"
 
+  recovery_window_in_days = 0 
+
   tags = {
     Name        = "${var.name}-db-secret"
     Environment = var.environment
