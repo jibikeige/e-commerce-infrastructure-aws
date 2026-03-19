@@ -6,4 +6,4 @@ VPC
 │     └── NAT Gateway
 │
 └── Private Subnets
-      └── Route → NAT → Internet
+      └── Route → NAT → Internet.
