@@ -1,9 +1,19 @@
 name: e-commerce-infrastructure-aws infrastructure
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      terraform_folder:
+        description: "Select Terraform folder to deploy"
+        required: true
+        type: choice
+        options:
+          - vpc
+          - eks
+          - ec2
+          - rds
+          - redis
+          - s3
 
 permissions:
   id-token: write
