@@ -51,6 +51,7 @@ resource "aws_iam_role_policy_attachment" "eso" {
 #  repository = "https://charts.external-secrets.io"
 #  chart      = "external-secrets"
 #  namespace  = "external-secrets"
+#  version    = "v2.2.0"
 
 #  create_namespace = true
 
