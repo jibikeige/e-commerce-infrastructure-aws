@@ -1,28 +1,46 @@
-resource "helm_release" "external_dns" {
-  name       = "external-dns"
-  namespace  = "kube-system"
-  repository = "https://kubernetes-sigs.github.io/external-dns/"
-  chart      = "external-dns"
+resource "helm_release" "external_secrets" {
+  name       = "external-secrets"
+  repository = "https://charts.external-secrets.io"
+  chart      = "external-secrets"
+  namespace  = "external-secrets"
 
-  values = [
-    yamlencode({
-      provider = "aws"
+  create_namespace = true
 
-      serviceAccount = {
-        create = true
-        name   = "external-dns"
-        annotations = {
-          "eks.amazonaws.com/role-arn" = aws_iam_role.external_dns.arn
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = aws_iam_role.eso.arn
+  }
+
+  depends_on = [aws_iam_role.eso]
+}
+
+resource "kubernetes_manifest" "cluster_secret_store" {
+  manifest = {
+    apiVersion = "external-secrets.io/v1beta1"
+    kind       = "ClusterSecretStore"
+
+    metadata = {
+      name = "aws-secrets"
+    }
+
+    spec = {
+      provider = {
+        aws = {
+          service = "SecretsManager"
+          region  = var.aws_region
+
+          auth = {
+            jwt = {
+              serviceAccountRef = {
+                name      = "external-secrets"
+                namespace = "external-secrets"
+              }
+            }
+          }
         }
       }
+    }
+  }
 
-      domainFilters = ["yourdomain.com"]
-
-      policy = "sync"
-      registry = "txt"
-      txtOwnerId = var.name
-    })
-  ]
-
-  depends_on = [module.eks]
+  depends_on = [helm_release.external_secrets]
 }
