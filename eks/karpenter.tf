@@ -1,3 +1,7 @@
+locals {
+  oidc_provider = trimprefix(module.eks.oidc_provider_url, "https://")
+}
+
 resource "aws_iam_role" "karpenter_controller" {
   name = "teleios-karpenter-controller-role-jibike-${var.environment}"
 
@@ -11,18 +15,18 @@ resource "aws_iam_role" "karpenter_controller" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${replace(module.eks.oidc_provider_url, "https://", "")}:sub" =
-          "system:serviceaccount:karpenter:karpenter"
+          "${local.oidc_provider}:sub" = "system:serviceaccount:karpenter:karpenter"
+          "${local.oidc_provider}:aud" = "sts.amazonaws.com"
         }
       }
     }]
   })
+
   depends_on = [module.eks]
 }
 
 resource "aws_iam_policy" "karpenter_controller" {
-  name = "teleios-KarpenterControllerPolicy-jibike-${var.environment}"
-
+  name   = "teleios-KarpenterControllerPolicy-jibike-${var.environment}"
   policy = file("${path.module}/karpenter-policy.json")
 }
 
@@ -31,21 +35,19 @@ resource "aws_iam_role_policy_attachment" "karpenter_attach" {
   policy_arn = aws_iam_policy.karpenter_controller.arn
 }
 
-#KARPENTER NODE IAM ROLE
 resource "aws_iam_role" "karpenter_node" {
   name = "teleios-karpenter-node-role-jibike-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "ec2.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
 
-# Attach policy to the above role created
 resource "aws_iam_role_policy_attachment" "node_worker" {
   role       = aws_iam_role.karpenter_node.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
@@ -61,14 +63,23 @@ resource "aws_iam_role_policy_attachment" "node_ecr" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
-#INSTALL KARPENTER VIA HELM
+resource "aws_eks_access_entry" "karpenter_node" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = aws_iam_role.karpenter_node.arn
+  type          = "EC2_LINUX"
+
+  depends_on = [module.eks]
+}
+
 resource "helm_release" "karpenter" {
-  name       = "teleios-karpenter-jibike-${var.environment}"
+  name       = "karpenter"
   repository = "oci://public.ecr.aws/karpenter"
   chart      = "karpenter"
   namespace  = "karpenter"
 
   create_namespace = true
+  wait             = true
+  timeout          = 300
 
   set {
     name  = "settings.clusterName"
@@ -85,44 +96,47 @@ resource "helm_release" "karpenter" {
     value = aws_iam_role.karpenter_controller.arn
   }
 
-  depends_on = [module.eks]
+  depends_on = [module.eks, aws_eks_access_entry.karpenter_node]
 }
 
-# KARPENTER NODEPOOL
 resource "kubectl_manifest" "karpenter_node_class" {
-  yaml_body = <<YAML
-apiVersion: karpenter.k8s.aws/v1beta1
-kind: EC2NodeClass
-metadata:
-  name: default
-spec:
-  role: ${aws_iam_role.karpenter_node.name}
-  subnetSelectorTerms:
-    - tags:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
-  securityGroupSelectorTerms:
-    - tags:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
-  amiFamily: AL2
-YAML
+  yaml_body = <<-YAML
+    apiVersion: karpenter.k8s.aws/v1beta1
+    kind: EC2NodeClass
+    metadata:
+      name: default
+    spec:
+      role: ${aws_iam_role.karpenter_node.name}
+      subnetSelectorTerms:
+        - tags:
+            karpenter.sh/discovery: ${module.eks.cluster_name}
+      securityGroupSelectorTerms:
+        - tags:
+            karpenter.sh/discovery: ${module.eks.cluster_name}
+      amiFamily: AL2
+  YAML
+
+  depends_on = [helm_release.karpenter]
 }
 
 resource "kubectl_manifest" "karpenter_node_pool" {
-  yaml_body = <<YAML
-apiVersion: karpenter.sh/v1beta1
-kind: NodePool
-metadata:
-  name: default
-spec:
-  template:
+  yaml_body = <<-YAML
+    apiVersion: karpenter.sh/v1beta1
+    kind: NodePool
+    metadata:
+      name: default
     spec:
-      nodeClassRef:
-        name: default
-      requirements:
-        - key: kubernetes.io/arch
-          operator: In
-          values: ["amd64"]
-  limits:
-    cpu: "1000"
-YAML
+      template:
+        spec:
+          nodeClassRef:
+            name: default
+          requirements:
+            - key: kubernetes.io/arch
+              operator: In
+              values: ["amd64"]
+      limits:
+        cpu: "1000"
+  YAML
+
+  depends_on = [kubectl_manifest.karpenter_node_class]
 }
