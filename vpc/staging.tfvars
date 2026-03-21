@@ -19,3 +19,7 @@ private_subnets = [
   "10.1.2.0/24",
   "10.1.3.0/24"
 ]
+
+additional_tags = {
+  "kubernetes.io/cluster/teleios-jibike-staging-eks" = "shared"
+}

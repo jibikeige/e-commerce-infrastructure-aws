@@ -32,3 +32,8 @@ variable "region" {
   description = "AWS region to deploy resources"
   type        = string
 }
+
+variable "additional_tags" {
+  type    = map(string)
+  default = {}
+}

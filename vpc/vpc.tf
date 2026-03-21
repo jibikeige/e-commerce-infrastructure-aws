@@ -8,4 +8,7 @@ module "vpc" {
   private_subnets = var.private_subnets
   azs             = var.azs
   region          = var.region
+
+  additional_tags = var.additional_tags
+
 }

@@ -21,10 +21,13 @@ resource "aws_subnet" "public" {
 
   map_public_ip_on_launch = true
 
-  tags = {
-    Name        = "${var.name}-public-${count.index}"
-    Environment = var.environment
-  }
+  tags = merge(
+    {
+      Name        = "${var.name}-private-${count.index}"
+      Environment = var.environment
+    },
+    var.additional_tags
+  )
 }
 
 ## Create Public Private
@@ -35,11 +38,15 @@ resource "aws_subnet" "private" {
   cidr_block        = var.private_subnets[count.index]
   availability_zone = var.azs[count.index]
 
-  tags = {
-    Name        = "${var.name}-private-${count.index}"
-    Environment = var.environment
-  }
+  tags = merge(
+    {
+      Name        = "${var.name}-public-${count.index}"
+      Environment = var.environment
+    },
+    var.additional_tags
+  )
 }
+
 ## Create NAT
 resource "aws_eip" "nat" {
   domain = "vpc"
