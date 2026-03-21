@@ -27,7 +27,7 @@ resource "kubernetes_manifest" "cluster_secret_store" {
       provider = {
         aws = {
           service = "SecretsManager"
-          region  = var.aws_region
+          region  = var.region
 
           auth = {
             jwt = {
