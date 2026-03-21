@@ -18,4 +18,6 @@ module "eks" {
 
   region = var.region
 
+  aws_auth_users = var.aws_auth_users
+
 }
