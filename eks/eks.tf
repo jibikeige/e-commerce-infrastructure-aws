@@ -19,8 +19,3 @@ module "eks" {
   region = var.region
 
 }
-
-resource "time_sleep" "wait_for_cluster" {
-  depends_on = [module.eks]
-  create_duration = "60s"
-}
