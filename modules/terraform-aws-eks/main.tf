@@ -10,8 +10,13 @@ resource "aws_eks_cluster" "this" {
     public_access_cidrs     = ["0.0.0.0/0"]
   }
 
+  access_config {
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
+  }
+
   tags = {
-    Name        = "${var.name}"
+    Name        = var.name
     Environment = var.environment
   }
 }
@@ -34,20 +39,59 @@ resource "aws_eks_node_group" "this" {
   ami_type       = "AL2023_x86_64_STANDARD"
 
   tags = {
-    Name        = "${var.node_name}"
+    Name        = var.node_name
     Environment = var.environment
   }
 }
 
-resource "kubernetes_config_map" "aws_auth" {
+resource "aws_eks_access_entry" "this" {
+  for_each = { for u in var.aws_auth_users : u.userarn => u }
+
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = each.value.userarn
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "this" {
+  for_each = { for u in var.aws_auth_users : u.userarn => u }
+
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = each.value.userarn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+
+  depends_on = [aws_eks_access_entry.this]
+}
+
+resource "aws_eks_access_entry" "node_group" {
+  cluster_name  = aws_eks_cluster.this.name
+  principal_arn = aws_iam_role.eks_node_role.arn
+  type          = "EC2_LINUX"
+
+  depends_on = [aws_eks_node_group.this]
+}
+
+resource "kubernetes_config_map_v1_data" "aws_auth" {
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
   }
 
   data = {
+    mapRoles = yamlencode([
+      {
+        rolearn  = aws_iam_role.eks_node_role.arn
+        username = "system:node:{{EC2PrivateDNSName}}"
+        groups   = ["system:bootstrappers", "system:nodes"]
+      }
+    ])
     mapUsers = yamlencode(var.aws_auth_users)
   }
+
+  force = true
 
   depends_on = [aws_eks_node_group.this]
 }
