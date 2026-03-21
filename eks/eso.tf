@@ -6,12 +6,12 @@ resource "helm_release" "external_secrets" {
 
   create_namespace = true
 
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.eso.arn
-  }
-
-  depends_on = [aws_iam_role.eso]
+  set = [
+    {
+      name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+      value = aws_iam_role.eso.arn
+    }
+  ]
 }
 
 resource "kubernetes_manifest" "cluster_secret_store" {
