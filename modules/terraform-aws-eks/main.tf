@@ -66,14 +66,6 @@ resource "aws_eks_access_policy_association" "this" {
   depends_on = [aws_eks_access_entry.this]
 }
 
-resource "aws_eks_access_entry" "node_group" {
-  cluster_name  = aws_eks_cluster.this.name
-  principal_arn = aws_iam_role.eks_node_role.arn
-  type          = "EC2_LINUX"
-
-  depends_on = [aws_eks_node_group.this]
-}
-
 resource "kubernetes_config_map_v1_data" "aws_auth" {
   metadata {
     name      = "aws-auth"
