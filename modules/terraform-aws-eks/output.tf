@@ -10,7 +10,7 @@ output "cluster_ca" {
   value = aws_eks_cluster.this.certificate_authority[0].data
 }
 
- output "oidc_provider_arn" {
+output "oidc_provider_arn" {
   value = aws_iam_openid_connect_provider.this.arn
 }
 

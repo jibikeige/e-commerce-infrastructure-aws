@@ -32,3 +32,13 @@ variable "region" {
   description = "AWS region where resources will be created"
   type        = string
 }
+
+
+variable "aws_auth_users" {
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+  default = []
+}

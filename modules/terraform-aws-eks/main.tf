@@ -38,3 +38,16 @@ resource "aws_eks_node_group" "this" {
     Environment = var.environment
   }
 }
+
+resource "kubernetes_config_map" "aws_auth" {
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapUsers = yamlencode(var.aws_auth_users)
+  }
+
+  depends_on = [aws_eks_node_group.this]
+}
