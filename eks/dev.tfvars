@@ -5,7 +5,7 @@ node_name      = "teleios-jibike-dev-node-group"
 desired_nodes  = 2
 min_nodes      = 2
 max_nodes      = 3
-instance_types = ["t3.medium""]
+instance_types = ["t3.medium"]
 role_name      = "teleios-jibike-dev-eks-iam"
 
 aws_auth_users = [
