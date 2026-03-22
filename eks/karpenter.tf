@@ -26,7 +26,7 @@ resource "aws_iam_role" "karpenter_controller" {
 }
 
 resource "aws_iam_policy" "karpenter_controller" {
-  name = "${var.name}-karpenter-controller-policy"
+  name = "${var.name}-karpenter-controller-policy-jibike-${var.environment}"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -43,6 +43,7 @@ resource "aws_iam_policy" "karpenter_controller" {
           "ec2:DescribeLaunchTemplates",
           "ec2:DescribeInstances",
           "ec2:DescribeInstanceTypes",
+          "ec2:DescribeInstanceTypeOfferings",
           "ec2:DescribeSubnets",
           "ec2:DescribeSecurityGroups",
           "ec2:DescribeImages",
