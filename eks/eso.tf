@@ -46,45 +46,45 @@ resource "aws_iam_role_policy_attachment" "eso" {
   policy_arn = aws_iam_policy.eso.arn
 }
 
-#resource "helm_release" "external_secrets" {
-#  name       = "external-secrets"
-#  repository = "https://charts.external-secrets.io"
-#  chart      = "external-secrets"
-#  namespace  = "external-secrets"
-#  version    = "v2.2.0"
+resource "helm_release" "external_secrets" {
+  name       = "external-secrets"
+  repository = "https://charts.external-secrets.io"
+  chart      = "external-secrets"
+  namespace  = "external-secrets"
+  version    = "v2.2.0"
 
-#  create_namespace = true
+  create_namespace = true
 
-#  set {
-#    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-#    value = aws_iam_role.eso.arn
-#  }
-#}
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = aws_iam_role.eso.arn
+  }
+}
 
-#resource "kubectl_manifest" "cluster_secret_store" {
-#  yaml_body = yamlencode({
-#    apiVersion = "external-secrets.io/v1beta1"
-#    kind       = "ClusterSecretStore"
-#    metadata = {
-#      name = "aws-secrets"
-#    }
-#    spec = {
-#      provider = {
-#        aws = {
-#          service = "SecretsManager"
-#          region  = var.region
-#          auth = {
-#            jwt = {
-#              serviceAccountRef = {
-#                name      = "external-secrets"
-#                namespace = "external-secrets"
-#              }
-#            }
-#          }
-#        }
-#      }
-#    }
-#  })
+resource "kubectl_manifest" "cluster_secret_store" {
+  yaml_body = yamlencode({
+    apiVersion = "external-secrets.io/v1beta1"
+    kind       = "ClusterSecretStore"
+    metadata = {
+      name = "aws-secrets"
+    }
+    spec = {
+      provider = {
+        aws = {
+          service = "SecretsManager"
+          region  = var.region
+          auth = {
+            jwt = {
+              serviceAccountRef = {
+                name      = "external-secrets"
+                namespace = "external-secrets"
+              }
+            }
+          }
+        }
+      }
+    }
+  })
 
-#  depends_on = [helm_release.external_secrets]
-#}
+  depends_on = [helm_release.external_secrets]
+}
