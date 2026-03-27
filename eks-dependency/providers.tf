@@ -13,7 +13,7 @@ provider "helm" {
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "aws"
-      args        = [
+      args = [
         "eks",
         "get-token",
         "--region", var.region,
@@ -33,7 +33,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = [
+    args = [
       "eks",
       "get-token",
       "--region", var.region,
@@ -52,7 +52,7 @@ provider "kubectl" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = [
+    args = [
       "eks",
       "get-token",
       "--region", var.region,
