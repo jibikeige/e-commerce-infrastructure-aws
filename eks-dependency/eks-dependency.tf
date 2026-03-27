@@ -3,6 +3,7 @@ module "eks-dependency" {
   
   environment = var.environment
   role_name = var.role_name
+  name = var.name
   region = var.region
   aws_eks_cluster_identity = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
   cluster_name     = data.aws_eks_cluster.this.name

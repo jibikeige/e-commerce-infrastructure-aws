@@ -21,3 +21,12 @@ variable "oidc_provider_arn" {
 variable "oidc_provider_url" {
   type = string
 }
+
+variable "role_name" {
+  type = string
+}
+
+variable "region" {
+  description = "AWS region to deploy resources"
+  type        = string
+}
