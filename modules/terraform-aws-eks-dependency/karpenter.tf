@@ -1,7 +1,3 @@
-locals {
-  oidc_provider = trimprefix(module.eks.oidc_provider_url, "https://")
-}
-
 resource "aws_iam_role" "karpenter_controller" {
   name = "teleios-karpenter-controller-role-jibike-${var.environment}"
 
@@ -10,19 +6,17 @@ resource "aws_iam_role" "karpenter_controller" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Federated = module.eks.oidc_provider_arn
+        Federated = var.oidc_provider_arn
       }
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${local.oidc_provider}:sub" = "system:serviceaccount:karpenter:karpenter"
-          "${local.oidc_provider}:aud" = "sts.amazonaws.com"
+          "${var.oidc_provider_url}:sub" = "system:serviceaccount:karpenter:karpenter"
+          "${var.oidc_provider_url}:aud" = "sts.amazonaws.com"
         }
       }
     }]
   })
-
-  depends_on = [module.eks]
 }
 
 resource "aws_iam_policy" "karpenter_controller" {
@@ -113,11 +107,9 @@ resource "aws_iam_role_policy_attachment" "node_ecr" {
 }
 
 resource "aws_eks_access_entry" "karpenter_node" {
-  cluster_name  = module.eks.cluster_name
+  cluster_name  = var.cluster_name
   principal_arn = aws_iam_role.karpenter_node.arn
   type          = "EC2_LINUX"
-
-  depends_on = [module.eks]
 }
 
 resource "helm_release" "karpenter" {
@@ -133,12 +125,12 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "settings.clusterName"
-    value = module.eks.cluster_name
+    value = var.cluster_name
   }
 
   set {
     name  = "settings.clusterEndpoint"
-    value = module.eks.cluster_endpoint
+    value = var.cluster_endpoint
   }
 
   set {
@@ -146,7 +138,7 @@ resource "helm_release" "karpenter" {
     value = aws_iam_role.karpenter_controller.arn
   }
 
-  depends_on = [module.eks, aws_eks_access_entry.karpenter_node]
+  depends_on = [aws_eks_access_entry.karpenter_node]
 }
 
 resource "kubectl_manifest" "karpenter_node_class" {
@@ -161,15 +153,15 @@ spec:
   amiFamily: AL2
 
   amiSelectorTerms:
-    - alias: al2@latest   # 👈 REQUIRED FIX
+    - alias: al2@latest
 
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
+        karpenter.sh/discovery: var.cluster_name
 
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
+        karpenter.sh/discovery: var.cluster_name
 YAML
 
   depends_on = [helm_release.karpenter]

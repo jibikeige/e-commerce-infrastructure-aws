@@ -8,6 +8,4 @@ resource "helm_release" "metrics_server" {
     name  = "args"
     value = "{--kubelet-insecure-tls,--kubelet-preferred-address-types=InternalIP}"
   }
-
-  depends_on = [module.eks]
 }
