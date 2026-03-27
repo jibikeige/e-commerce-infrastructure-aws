@@ -6,13 +6,13 @@ resource "aws_iam_role" "karpenter_controller" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Federated = var.oidc_provider_arn
+        Federated = local.oidc_provider_arn
       }
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          "${var.oidc_provider_url}:sub" = "system:serviceaccount:karpenter:karpenter"
-          "${var.oidc_provider_url}:aud" = "sts.amazonaws.com"
+          "${local.oidc_provider_url}:sub" = "system:serviceaccount:karpenter:karpenter"
+          "${local.oidc_provider_url}:aud" = "sts.amazonaws.com"
         }
       }
     }]
