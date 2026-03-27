@@ -2,10 +2,6 @@ provider "aws" {
   region = var.region
 }
 
-provider "aws" {
-  region = var.region
-}
-
 provider "helm" {
   kubernetes {
     host = data.aws_eks_cluster.this.endpoint
