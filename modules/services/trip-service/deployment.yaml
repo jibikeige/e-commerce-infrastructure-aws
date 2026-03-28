@@ -4,7 +4,7 @@ metadata:
   name: trip-service
   labels:
     app: trip-service
-  namespace: 
+  namespace: rideshare-prod
 spec:
   replicas: 1
   selector:

@@ -27,3 +27,8 @@ variable "manifests" {
     hpa        = any
   }))
 }
+
+variable "namespace" {
+  type    = string
+  default = "rideshare-prod"
+}
