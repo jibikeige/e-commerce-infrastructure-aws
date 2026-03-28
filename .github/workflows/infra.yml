@@ -58,6 +58,13 @@ jobs:
           role-to-assume: arn:aws:iam::221693237976:role/github-actions-oidc-jibike
           aws-region: us-east-1
 
+      - name: Login to AWS Public ECR
+        run: |
+          aws ecr-public get-login-password --region us-east-1 \
+          | helm registry login \
+            --username AWS \
+            --password-stdin public.ecr.aws
+
       - name: Show Deployment Context
         run: |
           echo "🚀 Terraform Deployment"
