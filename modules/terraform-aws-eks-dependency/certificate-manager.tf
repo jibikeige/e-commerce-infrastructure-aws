@@ -3,14 +3,14 @@ resource "kubectl_manifest" "cluster_issuer" {
     apiVersion = "cert-manager.io/v1"
     kind       = "ClusterIssuer"
     metadata = {
-      name = "letsencrypt-{var.environment}"
+      name = "letsencrypt-${var.environment}"
     }
     spec = {
       acme = {
         server = "https://acme-v02.api.letsencrypt.org/directory"
         email  = var.cert_manager_email
         privateKeySecretRef = {
-          name = "letsencrypt-{var.environment}"
+          name = "letsencrypt-${var.environment}"
         }
         solvers = [{
           http01 = {
