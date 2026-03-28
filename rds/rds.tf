@@ -10,8 +10,8 @@ module "rds" {
   vpc_id             = data.terraform_remote_state.vpc.outputs.vpc_id
   private_subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
 
-  db_name     = "teleios"
-  username    = var.username
+  db_name  = "teleios"
+  username = var.username
 
   instance_class    = var.db_instance_class
   allocated_storage = var.allocated_storage

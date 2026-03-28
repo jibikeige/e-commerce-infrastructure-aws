@@ -1,6 +1,6 @@
 resource "random_password" "db" {
-  length           = 20
-  special          = false
+  length  = 20
+  special = false
 }
 
 resource "random_id" "suffix" {

@@ -10,7 +10,7 @@ locals {
       service    = yamldecode(file("${path.module}/../modules/services/${svc}/service.yaml"))
       hpa        = yamldecode(file("${path.module}/../modules/services/${svc}/hpa.yaml"))
       configmap  = try(yamldecode(file("${path.module}/../modules/services/${svc}/configmap.yaml")), null)
-      ingress  = try(yamldecode(file("${path.module}/../modules/services/${svc}/ingress.yaml")), null)
+      ingress    = try(yamldecode(file("${path.module}/../modules/services/${svc}/ingress.yaml")), null)
     }
   }
 }
@@ -25,12 +25,12 @@ module "applications" {
   cluster_name             = data.aws_eks_cluster.this.name
   cluster_endpoint         = data.aws_eks_cluster.this.endpoint
 
-  manifests  = local.manifests
+  manifests = local.manifests
 
   db_secret_name    = local.db_secret_name
   redis_secret_name = local.redis_secret_name
-  app_secret_name = "jibike-rideshare"
-  dns_name  = "jibike.dev.rideshare.lukmonadeokun.com"
+  app_secret_name   = "jibike-rideshare"
+  dns_name          = "jibike.dev.rideshare.lukmonadeokun.com"
 
   paths = [
     {

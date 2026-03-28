@@ -28,7 +28,7 @@ variable "region" {
 }
 
 variable "domain_name" {
-  type        = string
+  type = string
 }
 
 variable "cert_manager_email" {

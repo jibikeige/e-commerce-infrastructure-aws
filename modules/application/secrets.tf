@@ -18,24 +18,24 @@ resource "kubectl_manifest" "external_secret" {
       }
       data = [
         # RDS secrets - pulled directly from RDS secret in Secrets Manager
-        { secretKey = "DATABASE_HOST",     remoteRef = { key = var.db_secret_name,    property = "host" } },
-        { secretKey = "DATABASE_PORT",     remoteRef = { key = var.db_secret_name,    property = "port" } },
-        { secretKey = "DATABASE_URL",      remoteRef = { key = var.db_secret_name,    property = "url" } },
-        { secretKey = "DATABASE_NAME",     remoteRef = { key = var.db_secret_name,    property = "db" } },
-        { secretKey = "DATABASE_USER",     remoteRef = { key = var.db_secret_name,    property = "username" } },
-        { secretKey = "DATABASE_PASSWORD", remoteRef = { key = var.db_secret_name,    property = "password" } },
+        { secretKey = "DATABASE_HOST", remoteRef = { key = var.db_secret_name, property = "host" } },
+        { secretKey = "DATABASE_PORT", remoteRef = { key = var.db_secret_name, property = "port" } },
+        { secretKey = "DATABASE_URL", remoteRef = { key = var.db_secret_name, property = "url" } },
+        { secretKey = "DATABASE_NAME", remoteRef = { key = var.db_secret_name, property = "db" } },
+        { secretKey = "DATABASE_USER", remoteRef = { key = var.db_secret_name, property = "username" } },
+        { secretKey = "DATABASE_PASSWORD", remoteRef = { key = var.db_secret_name, property = "password" } },
 
         # Redis secrets - pulled directly from Redis secret in Secrets Manager
-        { secretKey = "REDIS_HOST",        remoteRef = { key = var.redis_secret_name, property = "host" } },
-        { secretKey = "REDIS_PORT",        remoteRef = { key = var.redis_secret_name, property = "port" } },
-        { secretKey = "REDIS_URL",         remoteRef = { key = var.redis_secret_name, property = "url" } },
-        { secretKey = "REDIS_PASSWORD",                remoteRef = { key = var.redis_secret_name, property = "password" } },
+        { secretKey = "REDIS_HOST", remoteRef = { key = var.redis_secret_name, property = "host" } },
+        { secretKey = "REDIS_PORT", remoteRef = { key = var.redis_secret_name, property = "port" } },
+        { secretKey = "REDIS_URL", remoteRef = { key = var.redis_secret_name, property = "url" } },
+        { secretKey = "REDIS_PASSWORD", remoteRef = { key = var.redis_secret_name, property = "password" } },
 
         # App secrets
 
-        { secretKey = "JWT_SECRET",                    remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/JWT" } },
+        { secretKey = "JWT_SECRET", remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/JWT" } },
         { secretKey = "AZURE_EMAIL_CONNECTION_STRING", remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/AZURE_EMAIL_CONNECTION_STRING" } },
-        { secretKey = "SENDER_EMAIL",                  remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/SENDER_EMAIL" } },
+        { secretKey = "SENDER_EMAIL", remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/SENDER_EMAIL" } },
       ]
     }
   })

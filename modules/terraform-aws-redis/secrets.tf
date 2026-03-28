@@ -1,6 +1,6 @@
 resource "random_password" "redis" {
-  length           = 32
-  special          = false
+  length  = 32
+  special = false
 }
 
 resource "random_id" "suffix" {

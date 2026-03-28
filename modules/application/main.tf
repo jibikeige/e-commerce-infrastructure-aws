@@ -27,14 +27,14 @@ resource "kubernetes_manifest" "hpa" {
 
 resource "kubernetes_manifest" "configmap" {
   for_each = { for k, v in var.manifests : k => v if v.configmap != null }
-  manifest  = each.value.configmap
+  manifest = each.value.configmap
 
   depends_on = [kubernetes_namespace.this]
 }
 
 resource "kubernetes_manifest" "ingress" {
   for_each = { for k, v in var.manifests : k => v if v.ingress != null }
-  manifest  = each.value.ingress
+  manifest = each.value.ingress
 
   depends_on = [kubernetes_namespace.this]
 }

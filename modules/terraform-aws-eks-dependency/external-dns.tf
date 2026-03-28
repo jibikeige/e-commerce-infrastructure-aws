@@ -77,7 +77,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "policy"
-    value = "sync"  # sync will create and delete records, use "upsert-only" to only create
+    value = "sync" # sync will create and delete records, use "upsert-only" to only create
   }
 
   set {
