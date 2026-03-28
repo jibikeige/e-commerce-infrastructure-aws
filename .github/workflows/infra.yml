@@ -94,6 +94,12 @@ jobs:
         if: github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply'
         run: terraform plan --var-file=${{ github.event.inputs.environment }}.tfvars -out=tfplan
 
+      - name: Debug Ingress
+        run: |
+          terraform state list | grep ingress
+          kubectl get ingress -A
+          kubectl get all -n rideshare-prod
+
       # 🚀 APPLY
       - name: Terraform Apply
         if: github.event.inputs.action == 'apply'
