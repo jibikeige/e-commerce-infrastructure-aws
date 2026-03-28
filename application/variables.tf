@@ -14,7 +14,3 @@ variable "region" {
 variable "dns_name" {
   type = string
 }
-
-variable "paths" {
-  type = any
-}
