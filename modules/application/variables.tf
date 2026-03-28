@@ -20,7 +20,7 @@ variable "region" {
 }
 
 variable "manifests" {
-  type = map(any)
+  type = any
 }
 
 variable "namespace" {
