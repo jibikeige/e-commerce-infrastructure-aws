@@ -32,7 +32,7 @@ resource "aws_iam_role" "external_dns" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        Federated = module.eks.oidc_provider_arn
+        Federated = [local.oidc_provider_arn]
       }
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
