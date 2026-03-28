@@ -12,6 +12,11 @@ resource "helm_release" "cert_manager" {
   chart      = "cert-manager"
   version    = "v1.14.5"
 
+  create_namespace = true
+  wait             = true
+  wait_for_jobs    = true
+  timeout          = 300
+
   set {
     name  = "installCRDs"
     value = "true"

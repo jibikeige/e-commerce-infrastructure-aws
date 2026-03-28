@@ -1,3 +1,9 @@
+resource "time_sleep" "wait_for_cert_manager" {
+  create_duration = "30s"
+
+  depends_on = [helm_release.cert_manager]
+}
+
 resource "kubectl_manifest" "cluster_issuer" {
   yaml_body = yamlencode({
     apiVersion = "cert-manager.io/v1"
@@ -22,4 +28,6 @@ resource "kubectl_manifest" "cluster_issuer" {
       }
     }
   })
+
+  depends_on = [time_sleep.wait_for_cert_manager]
 }
