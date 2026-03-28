@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: rideshare-prod
 spec:
   type: ClusterIP   # Only accessible within the cluster
   selector:

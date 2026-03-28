@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rideshare-driver
-  namespace: rideshare-data   # must match the ExternalSecret namespace
+  namespace: rideshare-prod
   labels:
     app: rideshare-driver
 spec:

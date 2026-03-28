@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nextjs-runtime-config
-  namespace: rideshare-data
+  namespace: rideshare-prod
 data:
   NEXT_PUBLIC_DRIVER_SERVICE_URL: "http://rideshare-driver-service:3003"
   NEXT_PUBLIC_RIDER_SERVICE_URL: "http://rideshare-service:3002"

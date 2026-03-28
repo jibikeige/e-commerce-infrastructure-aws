@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: matching-service
-  namespace: rideshare-data
+  namespace: rideshare-prod
   labels:
     app: matching-service
 spec:

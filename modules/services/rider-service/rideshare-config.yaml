@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: jibike-rideshare-config
-  namespace: rideshare-data
+  namespace: rideshare-prod
 data:
   REDIS_HOST: "redis-standalone"
   REDIS_PORT: "6379"
