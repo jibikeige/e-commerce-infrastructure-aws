@@ -22,14 +22,8 @@ spec:
           ports:
             - containerPort: 3003
           env:
-            - name: SENDER_EMAIL
-              value: "DoNotReply@9929ee47-d7de-4494-8bec-adfce9d03cde.azurecomm.net"
-            - name: AZURE_EMAIL_CONNECTION_STRING
-              value: ""
             - name: HOST
               value: "0.0.0.0"
           envFrom:
-            - configMapRef:
-                name: nextjs-runtime-config
             - secretRef:
                 name: rideshare-secrets
