@@ -10,5 +10,5 @@ module "applications" {
     "trip-service"
   ]
 
-  base_path = "${path.module}/services"
+  base_path = "${path.root}/services"
 }
