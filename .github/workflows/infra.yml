@@ -94,6 +94,13 @@ jobs:
         if: github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply'
         run: terraform plan --var-file=${{ github.event.inputs.environment }}.tfvars -out=tfplan
 
+      - name: Configure kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --region us-east-2 \
+            --name teleios-jibike-dev-eks
+
+
       - name: Debug Ingress
         run: |
           terraform state list | grep ingress
