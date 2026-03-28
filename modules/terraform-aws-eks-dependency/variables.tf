@@ -26,3 +26,7 @@ variable "region" {
   description = "AWS region to deploy resources"
   type        = string
 }
+
+variable "domain_name" {
+  type        = string
+}
