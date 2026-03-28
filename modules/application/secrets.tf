@@ -7,7 +7,7 @@ resource "kubectl_manifest" "external_secret" {
       namespace = var.namespace
     }
     spec = {
-      refreshInterval = "1h"
+      refreshInterval = "1m"
       secretStoreRef = {
         name = "aws-secrets"
         kind = "ClusterSecretStore"
