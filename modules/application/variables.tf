@@ -40,3 +40,7 @@ variable "db_secret_name" {
 variable "redis_secret_name" {
   type = string
 }
+
+variable "app_secret_name" {
+  type = string
+}

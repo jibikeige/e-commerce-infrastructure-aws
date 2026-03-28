@@ -31,9 +31,9 @@ resource "kubectl_manifest" "external_secret" {
         { secretKey = "REDIS_URL",         remoteRef = { key = var.redis_secret_name, property = "url" } },
 
         # App secrets
-        #{ secretKey = "JWT_SECRET",                    remoteRef = { key = var.app_secret_name, property = "jwt_secret" } },
-        #{ secretKey = "AZURE_EMAIL_CONNECTION_STRING", remoteRef = { key = var.app_secret_name, property = "azure_email_connection_string" } },
-        #{ secretKey = "SENDER_EMAIL",                  remoteRef = { key = var.app_secret_name, property = "sender_email" } },
+        { secretKey = "JWT_SECRET",                    remoteRef = { key = var.app_secret_name, property = "jwt_secret" } },
+        { secretKey = "AZURE_EMAIL_CONNECTION_STRING", remoteRef = { key = var.app_secret_name, property = "azure_email_connection_string" } },
+        { secretKey = "SENDER_EMAIL",                  remoteRef = { key = var.app_secret_name, property = "sender_email" } },
       ]
     }
   })
