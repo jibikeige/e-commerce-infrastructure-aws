@@ -24,6 +24,6 @@ resource "aws_secretsmanager_secret_version" "redis" {
     host     = aws_elasticache_replication_group.this.primary_endpoint_address
     port     = "6379"
     password = random_password.redis.result
-    url      = "redis://:${urlencode(random_password.redis.result)}@${aws_elasticache_replication_group.this.primary_endpoint_address}:6379"
+    url      = "rediss://:${random_password.redis.result}@${aws_elasticache_replication_group.this.primary_endpoint_address}:6379"
   })
 }
