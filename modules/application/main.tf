@@ -24,3 +24,10 @@ resource "kubernetes_manifest" "hpa" {
 
   depends_on = [kubernetes_manifest.deployment]
 }
+
+resource "kubernetes_manifest" "configmap" {
+  for_each = var.manifests
+  manifest = each.value.configmap
+
+  depends_on = [kubernetes_manifest.deployment]
+}
