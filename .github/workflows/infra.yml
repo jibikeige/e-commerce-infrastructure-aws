@@ -80,7 +80,7 @@ jobs:
       # 📦 Init with backend
       - name: Terraform Init
         run: |
-          terraform init \
+          terraform init -upgrade -reconfigure \
             -backend-config="bucket=jibike-teleios-state-file" \
             -backend-config="key=${{ github.event.inputs.terraform_folder }}/${{ github.event.inputs.environment }}.tfstate" \
             -backend-config="region=us-east-1"
