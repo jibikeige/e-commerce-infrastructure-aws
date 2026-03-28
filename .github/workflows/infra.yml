@@ -99,19 +99,15 @@ jobs:
         if: github.event.inputs.action == 'apply'
         run: terraform apply --var-file=${{ github.event.inputs.environment }}.tfvars -auto-approve tfplan
 
-      # 🔗 Connect to EKS
-      - name: Configure kubeconfig
-        if: github.event.inputs.action == 'apply' && github.event.inputs.terraform_folder == 'eks-dependency'
-        run: |
-          aws eks update-kubeconfig \
-            --region us-east-2 \
-            --name teleios-jibike-${{ github.event.inputs.environment }}-eks
-
       # 🔎 Wait for External DNS to sync with Route53
       - name: Wait for DNS sync
         if: github.event.inputs.action == 'apply' && github.event.inputs.terraform_folder == 'application'
         timeout-minutes: 3
         run: |
+          aws eks update-kubeconfig \
+            --region us-east-2 \
+            --name teleios-jibike-${{ github.event.inputs.environment }}-eks
+
           echo "⏳ Waiting for External DNS to sync with Route53..."
 
           DNS_NAME="jibike.${{ github.event.inputs.environment }}.rideshare.lukmonadeokun.com"
