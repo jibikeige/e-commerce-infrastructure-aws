@@ -1,5 +1,5 @@
 locals {
-  services = ["trip-service", "driver-service", "email-service", "matching-service"]
+  services = ["trip-service", "driver-service", "email-service", "matching-service", "rider-service"]
 
   db_secret_name    = data.terraform_remote_state.rds.outputs.db_secret_name
   redis_secret_name = data.terraform_remote_state.redis.outputs.redis_secret_name
