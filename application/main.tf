@@ -1,6 +1,9 @@
 locals {
   services = ["trip-service"]
 
+  db_secret_arn    = data.terraform_remote_state.rds.outputs.db_secret_arn
+  redis_secret_arn = data.terraform_remote_state.redis.outputs.redis_secret_arn
+
   manifests = {
     for svc in local.services : svc => {
       deployment = yamldecode(file("${path.module}/../modules/services/${svc}/deployment.yaml"))
@@ -21,4 +24,7 @@ module "applications" {
   cluster_endpoint         = data.aws_eks_cluster.this.endpoint
 
   manifests  = local.manifests
+
+  db_secret_arn    = local.db_secret_arn
+  redis_secret_arn = local.redis_secret_arn
 }
