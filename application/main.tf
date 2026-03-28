@@ -1,5 +1,5 @@
 module "applications" {
-  source = "../modules/applications"
+  source = "../modules/application"
 
   services = [
     "trip-service"
