@@ -7,7 +7,6 @@ metadata:
     app: email-service
   namespace: rideshare-prod
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: email-service

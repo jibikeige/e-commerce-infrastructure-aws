@@ -6,7 +6,6 @@ metadata:
     app: trip-service
   namespace: rideshare-prod
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: trip-service
