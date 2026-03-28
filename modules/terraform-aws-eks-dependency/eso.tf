@@ -1,10 +1,4 @@
 #### IAM role for ESO 
-
-locals {
-  oidc_provider_url = replace(var.aws_eks_cluster_identity, "https://", "")
-  oidc_provider_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider_url}"
-}
-
 data "aws_iam_policy_document" "eso_assume_role" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
