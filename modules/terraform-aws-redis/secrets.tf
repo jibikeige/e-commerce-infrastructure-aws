@@ -4,8 +4,12 @@ resource "random_password" "redis" {
   override_special = "!#$%^&*()-_=+[]{}<>:?"
 }
 
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
 resource "aws_secretsmanager_secret" "redis" {
-  name                    = "${var.name}/redis"
+  name                    = "${var.name}/redis-${random_id.suffix.hex}"
   recovery_window_in_days = 0
 
   tags = {
