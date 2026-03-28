@@ -7,7 +7,7 @@ resource "kubectl_manifest" "ingress" {
       namespace = var.namespace
       annotations = {
         "external-dns.alpha.kubernetes.io/hostname" = var.dns_name
-        "cert-manager.io/cluster-issuer"            = "letsencrypt-prod"
+        "cert-manager.io/cluster-issuer"            = "letsencrypt-${var.environment}"
         "nginx.ingress.kubernetes.io/ssl-redirect"  = "true"
       }
     }

@@ -30,4 +30,54 @@ module "applications" {
   db_secret_name    = local.db_secret_name
   redis_secret_name = local.redis_secret_name
   app_secret_name = "jibike-rideshare"
+  dns_name  = "jibike.dev.rideshare.lukmonadeokun.com"
+
+  paths = [
+    {
+      path     = "/api/v1/drivers"
+      pathType = "Prefix"
+      backend  = { service = { name = "rideshare-driver", port = { number = 3003 } } }
+    },
+    {
+      path     = "/api/v1/riders"
+      pathType = "Prefix"
+      backend  = { service = { name = "rideshare-service", port = { number = 3000 } } }
+    },
+    {
+      path     = "/api/fares"
+      pathType = "Prefix"
+      backend  = { service = { name = "rideshare-service", port = { number = 3003 } } }
+    },
+    {
+      path     = "/drivers"
+      pathType = "Prefix"
+      backend  = { service = { name = "matching-service", port = { number = 3004 } } }
+    },
+    {
+      path     = "/api/v1/trips"
+      pathType = "Prefix"
+      backend  = { service = { name = "trip-service", port = { number = 3006 } } }
+    },
+    {
+      path     = "/api/v1/fare"
+      pathType = "Prefix"
+      backend  = { service = { name = "trip-service", port = { number = 3006 } } }
+    },
+    {
+      path     = "/api/v1/analytic"
+      pathType = "Prefix"
+      backend  = { service = { name = "trip-service", port = { number = 3006 } } }
+    },
+    {
+      path     = "/api/health"
+      pathType = "Prefix"
+      backend  = { service = { name = "trip-service", port = { number = 3006 } } }
+    },
+    {
+      path     = "/"
+      pathType = "Prefix"
+      backend  = { service = { name = "frontend", port = { number = 80 } } }
+    },
+  ]
+
 }

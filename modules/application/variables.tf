@@ -43,3 +43,7 @@ variable "app_secret_name" {
 variable "dns_name" {
   type = string
 }
+
+variable "paths" {
+  type = any
+}
