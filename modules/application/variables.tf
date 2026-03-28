@@ -20,13 +20,7 @@ variable "region" {
 }
 
 variable "manifests" {
-  description = "Kubernetes manifests per service"
-  type = map(object({
-    deployment = any
-    service    = any
-    hpa        = any
-    configmap  = optional(any)
-  }))
+  type = map(any)
 }
 
 variable "namespace" {
