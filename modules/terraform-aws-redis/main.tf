@@ -35,13 +35,10 @@ resource "aws_elasticache_subnet_group" "this" {
 }
 
 resource "aws_elasticache_replication_group" "this" {
-
   replication_group_id = "${var.name}-redis"
+  description          = "Redis cluster for ${var.environment}"
 
-  description = "Redis cluster for ${var.environment}"
-
-  node_type = var.node_type
-
+  node_type      = var.node_type
   engine         = "redis"
   engine_version = var.engine_version
   port           = 6379
@@ -54,8 +51,9 @@ resource "aws_elasticache_replication_group" "this" {
   automatic_failover_enabled = var.automatic_failover_enabled
   multi_az_enabled           = var.multi_az_enabled
 
-  at_rest_encryption_enabled = false
-  transit_encryption_enabled = false
+  at_rest_encryption_enabled = true
+  transit_encryption_enabled = true
+  auth_token                 = random_password.redis.result
 
   apply_immediately = true
 

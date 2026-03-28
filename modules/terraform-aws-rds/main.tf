@@ -1,3 +1,7 @@
+locals {
+  db_credentials = jsondecode(data.aws_secretsmanager_secret_version.db.secret_string)
+}
+
 resource "aws_security_group" "rds" {
   name        = "${var.name}-sg"
   description = "RDS security group"
@@ -48,7 +52,7 @@ resource "aws_db_instance" "this" {
 
   db_name  = var.db_name
   username = var.username
-  password = var.db_password
+  password = local.db_credentials.password
 
   multi_az = var.multi_az
 

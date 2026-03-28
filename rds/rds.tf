@@ -1,6 +1,4 @@
-locals {
-  db_credentials = jsondecode(data.aws_secretsmanager_secret_version.db.secret_string)
-}
+
 
 module "rds" {
   source = "../modules/terraform-aws-rds" # path to your module
@@ -14,7 +12,6 @@ module "rds" {
 
   db_name     = "teleios"
   username    = var.username
-  db_password = local.db_credentials.password
 
   instance_class    = var.db_instance_class
   allocated_storage = var.allocated_storage

@@ -64,9 +64,3 @@ variable "engine_version" {
   default     = "15"
   description = ""
 }
-
-variable "db_password" {
-  description = "Database password retrieved from Secrets Manager"
-  type        = string
-  sensitive   = true
-}
