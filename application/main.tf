@@ -9,7 +9,7 @@ locals {
       deployment = yamldecode(file("${path.module}/../modules/services/${svc}/deployment.yaml"))
       service    = yamldecode(file("${path.module}/../modules/services/${svc}/service.yaml"))
       hpa        = yamldecode(file("${path.module}/../modules/services/${svc}/hpa.yaml"))
-      configmap  = yamldecode(file("${path.module}/../modules/services/${svc}/configmap.yaml"))
+      configmap  = fileexists("${path.module}/../modules/services/${svc}/configmap.yaml") ? yamldecode(file("${path.module}/../modules/services/${svc}/configmap.yaml")) : null
     }
   }
 }
