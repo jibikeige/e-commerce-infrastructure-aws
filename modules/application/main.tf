@@ -31,3 +31,10 @@ resource "kubernetes_manifest" "configmap" {
 
   depends_on = [kubernetes_namespace.this]
 }
+
+resource "kubernetes_manifest" "ingress" {
+  for_each = { for k, v in var.manifests : k => v if v.ingress != null }
+  manifest  = each.value.ingress
+
+  depends_on = [kubernetes_namespace.this]
+}

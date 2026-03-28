@@ -10,6 +10,7 @@ locals {
       service    = yamldecode(file("${path.module}/../modules/services/${svc}/service.yaml"))
       hpa        = yamldecode(file("${path.module}/../modules/services/${svc}/hpa.yaml"))
       configmap  = try(yamldecode(file("${path.module}/../modules/services/${svc}/configmap.yaml")), null)
+      ingress  = try(yamldecode(file("${path.module}/../modules/services/${svc}/ingress.yaml")), null)
     }
   }
 }
