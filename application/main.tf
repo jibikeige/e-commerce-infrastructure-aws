@@ -1,8 +1,8 @@
 locals {
   services = ["trip-service"]
 
-  db_secret_arn    = data.terraform_remote_state.rds.outputs.db_secret_arn
-  redis_secret_arn = data.terraform_remote_state.redis.outputs.redis_secret_arn
+  db_secret_name    = data.terraform_remote_state.rds.outputs.db_secret_name
+  redis_secret_name = data.terraform_remote_state.redis.outputs.redis_secret_name
 
   manifests = {
     for svc in local.services : svc => {
@@ -25,6 +25,6 @@ module "applications" {
 
   manifests  = local.manifests
 
-  db_secret_arn    = local.db_secret_arn
-  redis_secret_arn = local.redis_secret_arn
+  db_secret_arn    = local.db_secret_name
+  redis_secret_arn = local.redis_secret_name
 }
