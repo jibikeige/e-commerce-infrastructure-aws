@@ -26,6 +26,13 @@ spec:
               value: "false"
             - name: NEXT_PUBLIC_TRIP_SERVICE_URL
               value: "http://jibike.rideshare.cudify.com"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
           envFrom:
             - secretRef:
                 name: rideshare-secrets
