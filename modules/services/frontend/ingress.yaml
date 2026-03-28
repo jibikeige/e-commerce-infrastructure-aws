@@ -4,11 +4,13 @@ metadata:
   name: ingress
   namespace: rideshare-prod
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: jibike.rideshare.lukmonadeokun.com
+    external-dns.alpha.kubernetes.io/hostname: jibike.dev.rideshare.lukmonadeokun.com
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-certificate: "arn:aws:acm:us-east-1:221693237976:certificate/2ca9f58e-7384-47fd-8ce9-bec65d3259a4"
 spec:
   ingressClassName: nginx
   rules:
-  - host: jibike.rideshare.lukmonadeokun.com
+  - host: jibike.dev.rideshare.lukmonadeokun.com
     http:
       paths:
       - path: /api/v1/drivers

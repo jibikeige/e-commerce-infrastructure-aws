@@ -30,3 +30,7 @@ variable "region" {
 variable "domain_name" {
   type        = string
 }
+
+variable "cert_manager_email" {
+  type = string
+}

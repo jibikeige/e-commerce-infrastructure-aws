@@ -9,4 +9,5 @@ module "eks-dependency" {
   cluster_name             = data.aws_eks_cluster.this.name
   cluster_endpoint         = data.aws_eks_cluster.this.endpoint
   domain_name              = "lukmonadeokun.com"
+  cert_manager_email       = "jibike.majaro@gmail.com"
 }

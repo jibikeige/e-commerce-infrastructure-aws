@@ -39,3 +39,7 @@ variable "redis_secret_name" {
 variable "app_secret_name" {
   type = string
 }
+
+variable "dns_name" {
+  type = string
+}
