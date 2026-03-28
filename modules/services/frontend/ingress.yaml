@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: ingress
   namespace: rideshare-prod
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: jibike.rideshare.lukmonadeokun.com
 spec:
   ingressClassName: nginx
   rules:
