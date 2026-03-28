@@ -6,7 +6,6 @@ metadata:
     app: frontend
   namespace: rideshare-prod
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: frontend
