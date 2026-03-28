@@ -30,7 +30,7 @@ module "applications" {
   db_secret_name    = local.db_secret_name
   redis_secret_name = local.redis_secret_name
   app_secret_name   = "jibike-rideshare"
-  dns_name          = "jibike.dev.rideshare.lukmonadeokun.com"
+  dns_name          = var.dns_name
 
   paths = [
     {
