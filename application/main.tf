@@ -3,9 +3,9 @@ locals {
 
   manifests = {
     for svc in local.services : svc => {
-      deployment = yamldecode(file("${path.root}/../services/${svc}/deployment.yaml"))
-      service    = yamldecode(file("${path.root}/../services/${svc}/service.yaml"))
-      hpa        = yamldecode(file("${path.root}/../services/${svc}/hpa.yaml"))
+      deployment = yamldecode(file("${path.module}/../modules/services/${svc}/deployment.yaml"))
+      service    = yamldecode(file("${path.module}/../modules/services/${svc}/service.yaml"))
+      hpa        = yamldecode(file("${path.module}/../modules/services/${svc}/hpa.yaml"))
     }
   }
 }
