@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rideshare-service
+  labels:
+    app: rideshare-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rideshare-service
+  template:
+    metadata:
+      labels:
+        app: rideshare-service
+    spec:
+      containers:
+        - name: rideshare-service
+          image: 221693237976.dkr.ecr.us-east-2.amazonaws.com/jibike_rideshare_rider_service:rideshare-rideshare-service-v0.09
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: USE_SSL
+              value: "false"
+            - name: NEXT_PUBLIC_TRIP_SERVICE_URL
+              value: "http://jibike.rideshare.cudify.com"
+          envFrom:
+            - secretRef:
+                name: rideshare-secrets

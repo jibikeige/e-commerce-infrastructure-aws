@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matching-service
+  namespace: rideshare-data
+  labels:
+    app: matching-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matching-service
+  template:
+    metadata:
+      labels:
+        app: matching-service
+    spec:
+      containers:
+        - name: matching-service
+          image: 221693237976.dkr.ecr.us-east-2.amazonaws.com/jibike_rideshare_rider_service:rideshare-matching-service-v0.04
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3004
+          envFrom:
+            - configMapRef:
+                name: trip-service-url-config
+            - secretRef:
+                name: rideshare-secrets

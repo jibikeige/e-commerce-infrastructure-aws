@@ -1,0 +1,9 @@
+# rideshare-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jibike-rideshare-config
+  namespace: rideshare-data
+data:
+  REDIS_HOST: "redis-standalone"
+  REDIS_PORT: "6379"

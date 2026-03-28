@@ -16,6 +16,7 @@ on:
           - rds
           - redis
           - s3
+          - application
 
       action:
         description: "Select action"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trip-service-url-config
+  namespace: rideshare-data
+data:
+  TRIP_SERVICE_URL: "http://trip-service:3006"

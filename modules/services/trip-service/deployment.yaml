@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip-service
+  labels:
+    app: trip-service
+  namespace: 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trip-service
+  template:
+    metadata:
+      labels:
+        app: trip-service
+    spec:
+      containers:
+        - name: trip-service
+          image: 221693237976.dkr.ecr.us-east-2.amazonaws.com/jibike_rideshare_rider_service:rideshare-trip-service-v0.07
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3006
+          env:
+            - name: DEBUG
+              value: "True"
+            - name: "ALLOWED_ORIGINS"
+              value: "http://localhost:3000,http://127.0.0.1:3000"
+          envFrom:
+            - secretRef:
+                name: rideshare-secrets
