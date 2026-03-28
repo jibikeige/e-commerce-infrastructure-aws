@@ -25,6 +25,7 @@ variable "manifests" {
     deployment = any
     service    = any
     hpa        = any
+    configmap  = any
   }))
 }
 
