@@ -12,9 +12,6 @@ variable "region" {
 }
 
 variable "manifests" {
-  type = map(object({
-    deployment = any
-    service    = any
-    hpa        = any
-  }))
+  description = "List of Kubernetes manifest file paths"
+  type        = list(string)
 }
