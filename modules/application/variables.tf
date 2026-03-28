@@ -32,3 +32,11 @@ variable "namespace" {
   type    = string
   default = "rideshare-prod"
 }
+
+variable "db_secret_name" {
+  type = string
+}
+
+variable "redis_secret_name" {
+  type = string
+}

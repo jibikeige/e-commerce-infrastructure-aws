@@ -25,6 +25,6 @@ module "applications" {
 
   manifests  = local.manifests
 
-  db_secret_arn    = local.db_secret_name
-  redis_secret_arn = local.redis_secret_name
+  db_secret_name    = local.db_secret_name
+  redis_secret_name = local.redis_secret_name
 }
