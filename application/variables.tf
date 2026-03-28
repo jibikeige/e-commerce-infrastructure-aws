@@ -11,11 +11,7 @@ variable "region" {
   type        = string
 }
 
-variable "manifests" {
-  description = "Kubernetes manifests per service"
-  type = map(object({
-    deployment = any
-    service    = any
-    hpa        = any
-  }))
+variable "base_path" {
+  description = "Path to services directory"
+  type        = string
 }
