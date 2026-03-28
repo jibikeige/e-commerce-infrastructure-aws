@@ -29,9 +29,10 @@ resource "kubectl_manifest" "external_secret" {
         { secretKey = "REDIS_HOST",        remoteRef = { key = var.redis_secret_name, property = "host" } },
         { secretKey = "REDIS_PORT",        remoteRef = { key = var.redis_secret_name, property = "port" } },
         { secretKey = "REDIS_URL",         remoteRef = { key = var.redis_secret_name, property = "url" } },
+        { secretKey = "REDIS_PASSWORD",                remoteRef = { key = var.redis_secret_name, property = "password" } },
 
         # App secrets
-                
+
         { secretKey = "JWT_SECRET",                    remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/JWT" } },
         { secretKey = "AZURE_EMAIL_CONNECTION_STRING", remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/AZURE_EMAIL_CONNECTION_STRING" } },
         { secretKey = "SENDER_EMAIL",                  remoteRef = { key = "jibike-rideshare", property = "jibike/rideshare/SENDER_EMAIL" } },
